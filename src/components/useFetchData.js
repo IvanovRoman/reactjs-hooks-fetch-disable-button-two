@@ -5,28 +5,33 @@ const useFetchData = url => {
   let [isSending, setIsSending] = useState(false);
 
   const sendRequest = useCallback(() => {
-    // don't send again while we are sending
-    if (isSending) return;
-    // send the actual request
+    // if (isSending) return;
     fetch(url)
       .then(response => response.json())
       .then(data => {
         setNames(data);
+        console.log(names);
       })
       .catch(err => {
         console.error(err);
       })
       .finally(() => {
-        setIsSending(false);
+        setTimeout(() => setIsSending(false), 1500);
       });
 
     setIsSending(true);
-  }, [isSending, url]);
+  }, [url, names]);
 
   return {
     names,
     isSending,
     sendRequest,
+    bind: {
+      onClick: () => {
+        sendRequest();
+        // setIsSending(!isSending);
+      },
+    },
   };
 };
 

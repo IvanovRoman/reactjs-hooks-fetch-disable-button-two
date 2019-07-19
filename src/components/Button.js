@@ -1,8 +1,12 @@
 import React from "react";
+import useFetchData from "./useFetchData";
 
-const Button = props => {
+const Button = () => {
+  const { bind, isSending } = useFetchData(
+    "https://api.github.com/repositories/19438/issues",
+  );
   return (
-    <button onClick={props.sendRequest} disabled={props.isSending}>
+    <button {...bind} disabled={isSending}>
       Click
     </button>
   );
